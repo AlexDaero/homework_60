@@ -20,6 +20,14 @@ const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
         }
     }
 
+    const getTargetCountry = async (): Promise<void> => {
+        try {
+            const response: AxiosResponse<ITargetCountryInfo[]> = await axios.get('/')
+        } catch (error: unknown) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getCountries()
     }, [])
