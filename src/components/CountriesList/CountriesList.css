@@ -1,0 +1,5 @@
+.countries_list{
+    width: 200px;
+    height: 80vh;
+    overflow-y: scroll;
+}
