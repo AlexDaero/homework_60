@@ -1,0 +1,14 @@
+.Countries_page{
+    display: flex;
+    border: 1px solid black;
+    gap: 10px;
+    width: 1000px;
+    margin: 20px auto;
+    background-color: rgb(231, 228, 255, 0.5);
+}
+.countries_page_loader{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 35%;
+    left: 50%;
+}

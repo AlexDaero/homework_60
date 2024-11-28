@@ -1,0 +1,28 @@
+.CountryInfo {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.countryInfo_about {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.countryInfo_about_title{
+    font-size: 40px;
+}
+
+.countryInfo_about_text{
+    font-size: 20px;
+}
+
+.countryInfo_flag {
+    width: 350px;
+    height: 230px;
+}
+.countryInfo_about_borders{
+    font-size: 20px;
+}

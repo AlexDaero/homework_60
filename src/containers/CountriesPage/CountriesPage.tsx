@@ -4,13 +4,14 @@ import axios, { AxiosResponse } from "axios";
 import { ICountry, IShortCountry } from "../../helpers/interfaces";
 import CountriesList from "../../components/CountriesList/CountriesList";
 import CountryInfo from "../../components/CountryInfo/CountryInfo";
-
+import Loader from 'react-ts-loaders'
 
 axios.defaults.baseURL = 'https://restcountries.com/v3.1/'
 
 const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
     const [countriesList, setCountriesList] = useState<IShortCountry[]>([])
     const [targetCountry, setTargetCountry] = useState<ICountry | null>(null)
+    const [pageIsLoad, setPageIsLoad] = useState(false)
 
     const getCountries = async (): Promise<void> => {
         try {
@@ -25,6 +26,7 @@ const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
             })
 
             setCountriesList(sortCountriesArray)
+            setPageIsLoad(true)
         } catch (error: unknown) {
             console.log(error)
         }
@@ -33,7 +35,6 @@ const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
     const getTargetCountry = async (targetName: string): Promise<void> => {
         try {
             const response: AxiosResponse<ICountry[]> = await axios.get(`/name/${targetName}`)
-            console.log(response.data[0])
             setTargetCountry(response.data[0])
         } catch (error: unknown) {
             console.log(error)
@@ -41,15 +42,19 @@ const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
     }
 
     useEffect(() => {
-        console.log(targetCountry)
-    }, [targetCountry])
-
-    useEffect(() => {
         getCountries()
     }, [])
 
     return (
-        <div>
+        <div className="Countries_page">
+            {!pageIsLoad
+                ? <Loader
+                    type="ring"
+                    size={200}
+                    className="countries_page_loader"
+                />
+                : null
+            }
             <CountriesList
                 countries={countriesList}
                 targetCountryOnCLick={(country: string) => getTargetCountry(country)}

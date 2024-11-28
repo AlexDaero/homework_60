@@ -9,10 +9,11 @@ interface ICountriesListProps {
 
 const CountriesList: FC<ICountriesListProps> = ({ countries, targetCountryOnCLick }) => {
     return (
-        <ul className="countries_list">
+        <ul className="countriesList">
             {countries.map((country) => {
                 return (
                     <li
+                        className="countriesList_item"
                         key={country.name.common}
                         onClick={() => targetCountryOnCLick(country.name.common)}
                     >
