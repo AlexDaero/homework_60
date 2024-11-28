@@ -62,11 +62,13 @@ const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
     return (
         <div className="Countries_page">
             {!pageIsLoad
-                ? <Loader
-                    type="ring"
-                    size={200}
-                    className="countries_page_loader"
-                />
+                ? <div className="preloader_backdrop">
+                    <Loader
+                        type="ring"
+                        size={200}
+                        className="preloader"
+                    />
+                </div>
                 : null
             }
             <CountriesList
