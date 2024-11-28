@@ -11,6 +11,7 @@ axios.defaults.baseURL = 'https://restcountries.com/v3.1/'
 const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
     const [countriesList, setCountriesList] = useState<IShortCountry[]>([])
     const [targetCountry, setTargetCountry] = useState<ICountry | null>(null)
+    const [borders, setBorders] = useState<string[]>([])
     const [pageIsLoad, setPageIsLoad] = useState(false)
 
     const getCountries = async (): Promise<void> => {
@@ -33,12 +34,25 @@ const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
     }
 
     const getTargetCountry = async (targetName: string): Promise<void> => {
+        setPageIsLoad(false)
         try {
             const response: AxiosResponse<ICountry[]> = await axios.get(`/name/${targetName}`)
             setTargetCountry(response.data[0])
+            getBordersInfo(response.data[0])
         } catch (error: unknown) {
             console.log(error)
         }
+    }
+
+    const getBordersInfo = (country: ICountry) => {
+        setBorders([])
+        if (country?.borders) {
+            country?.borders.map(async (border) => {
+                const response: AxiosResponse<IShortCountry[]> = await axios.get(`/alpha?codes=${border}`)
+                setBorders(prev => [...prev, response.data[0].name.common])
+            })
+        }
+        setPageIsLoad(true)
     }
 
     useEffect(() => {
@@ -61,6 +75,7 @@ const CountriesPage: React.FunctionComponent = (): React.ReactElement => {
             />
             <CountryInfo
                 country={targetCountry}
+                borders={borders}
             />
         </div>
     )
